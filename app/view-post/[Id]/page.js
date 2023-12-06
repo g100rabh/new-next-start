@@ -4,8 +4,10 @@ import { getServerSession } from "next-auth";
 import { useEffect, useState } from "react";
 
 const ViewPost = ({params}) => {
+  
   const [post, setPost] = useState(null);
-  const [session, setSession] = useState(null);
+  const [comments, setComments] = useState(null);
+  const [newComment, setNewComment] = useState(null);
 
  
   async function getPost() {
@@ -24,10 +26,41 @@ const ViewPost = ({params}) => {
     }
   }
 
+  const getComment = async () => {
+    const res = await fetch(`/api/comments/${params.id}`)
+    if(res.ok){
+      const data = await res.json();
+      setComments([...data])
+    }
+
+  }
+
   useEffect(()=>{
-    getPost()
-    
+    getPost();
+    getComment();
   },[])
+
+  const handleCommentSubmit = async()=>{
+    try {
+      const postId = post.id; 
+      const res = await fetch("/api/comment-add", {
+        method: "POST",
+        headers: { 'Content-type': 'application/json' },
+        body: JSON.stringify({
+          content: newComment,
+          postId,
+        }),
+      });
+      if(res.ok) {
+        setNewComment('');
+      }
+    } catch(error) {
+      alert(error);
+    }
+    
+  }
+
+  
 console.log(post);
   
 
@@ -35,7 +68,7 @@ console.log(post);
    
     <div className="max-w-3xl mx-auto mt-8 p-4 bg-white rounded-md shadow-lg">
       {!post ? <p>Loading...</p> : ( <div>
-    
+    {JSON.stringify({comments})}
       <h1 className="text-3xl font-bold mb-4">{post.title}</h1>
       <p className="text-gray-600">
         Posted by {post.author.name} ({post.author.email})
@@ -59,12 +92,12 @@ console.log(post);
           <textarea
             className="w-full p-3 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
             placeholder="Add a comment..."
-            // value={newComment}
+            value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
           ></textarea>
           <button
             className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-300"
-            // onClick={handleCommentSubmit}
+            onClick={handleCommentSubmit}
           >
             Add Comment
           </button>

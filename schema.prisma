@@ -11,12 +11,15 @@ datasource db {
 }
 
 model Post {
-    id        String  @id @default(cuid())
+    id        String    @id @default(cuid())
     title     String
     content   String?
-    published Boolean @default(false)
-    author    User?   @relation(fields: [authorId], references: [id])
+    published Boolean   @default(false)
+    author    User?     @relation(fields: [authorId], references: [id])
     authorId  String?
+    comments  Comment[]
+
+    @@map(name: "posts")
 }
 
 model User {
@@ -29,4 +32,14 @@ model User {
     posts     Post[]
 
     @@map(name: "users")
+}
+
+model Comment {
+    id      String  @id @default(cuid())
+    content String?
+    email   String?
+    postId  String?
+    post    Post?   @relation(fields: [postId], references: [id])
+
+    @@map(name: "comments")
 }

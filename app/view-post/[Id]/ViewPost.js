@@ -58,7 +58,7 @@ console.log(post);
             className="w-full p-3 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
             placeholder="Add a comment..."
             // value={newComment}
-            onChange={(e) => setNewComment(e.target.value)}
+            // onChange={(e) => setNewComment(e.target.value)}
           ></textarea>
           <button
             className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-300"
