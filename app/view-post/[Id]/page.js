@@ -93,7 +93,7 @@ const ViewPost = ({ params }) => {
                 <div
                 style={{ maxHeight: '300px' }}
                   className={
-                    comments && comments.length > 5 ? "overflow-y-auto" : ""
+                    comments && comments.length >= 5 ? "overflow-y-auto" : ""
                   }
                 >
                   {comments &&
