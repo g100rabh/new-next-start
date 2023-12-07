@@ -16,11 +16,6 @@ export async function POST(request) {
 
     console.log(hashedPassword);
 
-    // const response = await Sql`
-    //     INSERT INTO users (email, password)
-    //     VALUES (${email}, ${hashedPassword})
-    // `;
-
     const result = await prisma.user.create({
       data: {
         email: email,
