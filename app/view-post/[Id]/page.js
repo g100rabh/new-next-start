@@ -1,6 +1,5 @@
 "use client";
 
-import { getServerSession } from "next-auth";
 import { useEffect, useState } from "react";
 
 const ViewPost = ({ params }) => {

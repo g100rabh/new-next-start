@@ -14,7 +14,7 @@ const Header = ({session}) => {
       {session ? (
         <Logout />
       ) : (
-        <Link className="border-2 rounded px-2 py-1" href="/authentication">
+        <Link className="border-2 rounded px-2 py-1" href="/signin">
           Login
         </Link>
       )}
